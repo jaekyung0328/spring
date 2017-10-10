@@ -8,5 +8,6 @@
 </head>
 <body>
 <h2>회원전용 페이지</h2>
+<a href="./logout"> logout</a>
 </body>
 </html>

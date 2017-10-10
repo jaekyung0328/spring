@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mysql.jdbc.interceptors.SessionAssociationInterceptor;
+
 import cafe.jjdev.web.service.Member;
 import cafe.jjdev.web.service.MemberDao;
 import cafe.jjdev.web.service.MemberService;
@@ -22,12 +24,19 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@RequestMapping(value="/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/login";
+	}
 	
 	//로그인  폼
 	@RequestMapping(value="/login", method = RequestMethod.GET)
-	public String login() {
-		
-		return "login";
+	public String login(HttpSession session) {
+		if(session.getAttribute("logingMember") == null) {
+			return "login";
+		}		
+		return "redirect:/test";
 	}
 		
 	//로그인 처리
