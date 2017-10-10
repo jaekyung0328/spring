@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import cafe.jjdev.web.service.Member;
 import cafe.jjdev.web.service.MemberDao;
+import cafe.jjdev.web.service.MemberService;
 
 @Controller
 public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/memberList")
 	public String memberList() {
@@ -27,6 +30,7 @@ public class MemberController {
 	public String addMebmer(MemberRequest memberRequest) { // Member member
 		/*입력받는 폼의 네임과 MemberRequest의 객체네의 명이 일치해야함 */
 		System.out.println(memberRequest);
+		memberService.addMember(memberRequest);
 		return "redirect:/memberList"; //response.sendRedirct("/memberList")
 				//memberList를 재요청 하세요
 	}
