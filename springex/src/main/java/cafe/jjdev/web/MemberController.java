@@ -1,5 +1,9 @@
 package cafe.jjdev.web;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +22,45 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@RequestMapping(value = "/memberList")
-	public String memberList() {
-		System.out.println("memberList 요청");
-		//DBㅇ에서 list를 get해온다.
-		return"memberList";
+	
+	//로그인  폼
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public String login() {
+		
+		return "login";
+	}
+		
+	//로그인 처리
+	@RequestMapping(value="/login", method = RequestMethod.POST)
+	public String login(Member member, HttpSession session) {
+		//로그인 프로세스 진행
+		Member loginmember = memberDao.login(member);
+		System.out.println("loginmember : " + loginmember);
+		if(loginmember == null) {
+			return "redirect:/login";
+		}else {
+			//session 로그인 정보를 저장
+			session.setAttribute("logingMember", loginmember);
+			return "redirect:/test";
+		}	
+	}
+	
+	//회원전용페이지
+	@RequestMapping(value="/test")
+	public String test(HttpSession session) {
+		if(session.getAttribute("logingMember") == null) {
+			return "redirect:/login";
+		}
+		return "test";
+	}
+
+	
+	@RequestMapping(value="/memberList")
+	public String memberList(Model model) {
+		System.out.println("memberList 요청...");
+		List<Member> list = memberDao.selectMemberList();
+		model.addAttribute("list",list);
+		return "memberList"; 
 	}
 	
 	@RequestMapping(value = "/addMember", method = RequestMethod.POST)

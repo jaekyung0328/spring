@@ -10,13 +10,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="member_name" property="memberName"/>
 	</resultMap>
 	
+	<select id="login"  resultMap="resultmember" parameterType="cafe.jjdev.web.service.Member">
+		SELECT member_no,member_id,member_name FROM member
+		WHERE member_id = #{memberId} and member_pw = #{memberPw}
+	</select>
+	
 	<select id="selectMemberOne" parameterType="int" resultMap="resultmember">
 		SELECT * FROM member
 		WHERE member_no = #{memberNo}
 	</select>
 	
-	<select id="selectMember" resultMap="resultmember">
-		SELECT * FROM member
+	<select id="selectMemberList" resultMap="resultmember">
+		SELECT member_no,member_id,member_name FROM member
 	</select>
 	
 	<insert id="insertMember" parameterType="cafe.jjdev.web.service.Member">
