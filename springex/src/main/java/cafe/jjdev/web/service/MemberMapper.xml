@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cafe.jjdev.web.service.MemberMapper">
+	<resultMap type="cafe.jjdev.web.service.Member" id="resultmember">
+		<result column="member_no" property="memberNo"/>
+		<result column="member_id" property="memberId"/>
+		<result column="member_pw" property="memberPw"/>
+		<result column="member_name" property="memberName"/>
+	</resultMap>
+	
+	<select id="selectMemberOne" parameterType="int" resultMap="resultmember">
+		SELECT * FROM member
+		WHERE member_no = #{memberNo}
+	</select>
+	
+	<select id="selectMember" resultMap="resultmember">
+		SELECT * FROM member
+	</select>
+</mapper>
