@@ -17,6 +17,36 @@ public class BoardController {
 	@Autowired
 	private BoardDao boardDao;
 	
+	// 글 수정 폼 요청
+    @RequestMapping(value="/boardModify", method = RequestMethod.GET)
+    public String boardModify(Model model
+                            , @RequestParam(value="boardNo", required=true) int boardNo){
+        Board board  = boardDao.getBoard(boardNo); //select
+        model.addAttribute("board", board); 
+        return "boardModify";
+    }
+    
+    // 글 수정 요청
+    @RequestMapping(value="/boardModify", method = RequestMethod.POST)
+    public String boardModify(Board board){
+        boardDao.updateBoard(board); //update
+        return "redirect:/boardView?boardNo="+board.getBoardNo();
+    }
+    
+    // 글 삭제 폼 요청(비밀번호 입력 폼)
+    @RequestMapping(value="/boardRemove", method = RequestMethod.GET)
+    public String boardRemove(@RequestParam(value="boardNo", required=true) int boardNo) {
+        return "boardRemove";
+    }
+    
+    // 글 삭제 요청
+    @RequestMapping(value="/boardRemove", method = RequestMethod.POST)
+    public String boardRemove(@RequestParam(value="boardNo", required=true) int boardNo
+                            , @RequestParam(value="boardPw", required=true) String boardPw) {
+        boardDao.deleteBoard(boardNo, boardPw); //delete
+        return "redirect:/boardList";
+    }
+    
 	// 글 상세 내용 요청 
     @RequestMapping(value="/boardView", method = RequestMethod.GET)
     public String boardView(Model model
