@@ -28,8 +28,8 @@ public class BoardDao {
 	public Board getBoard(int boardNo) {
 		return sqlSessionTemplate.selectOne(NS + "getBoard", boardNo);
 	}
-
-	public List<Board> getBoardList(int currentPage, int pagePerRow) {
+		
+	public List<Board> getBoardList(int currentPage, int pagePerRow) {  //현재페이지, 몇개씩 보여줄껀가
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		map.put("beginRow", (currentPage - 1) * pagePerRow);
 		map.put("pagePerRow", pagePerRow);
