@@ -34,6 +34,7 @@
         <property name="mapperLocations">
             <list>
                 <value>classpath:cafe/jjdev/web/service/MemberMapper.xml</value>
+                <value>classpath:cafe/jjdev/web/service/BoardMapper.xml</value>
             </list>
         </property>
     </bean>
